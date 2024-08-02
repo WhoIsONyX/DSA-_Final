@@ -52,40 +52,7 @@ def astar_greedy(G, start, goal):
     time_taken = (end_time - start_time) * 1000  # Calculate the time taken in milliseconds
     return [], time_taken
 
-def dijkstra(G, start, goal):
-    queue = [(0, start)]
-    distances = {node: float('inf') for node in G.nodes}
-    distances[start] = 0
-    came_from = {}
 
-    start_time = time.time()  # Start the timer
-
-    while queue:
-        current_distance, current_node = heapq.heappop(queue)
-
-        if current_node == goal:
-            end_time = time.time()  # End the timer
-            path = []
-            while current_node in came_from:
-                path.append(current_node)
-                current_node = came_from[current_node]
-            path.append(start)
-            path = path[::-1]
-            time_taken = (end_time - start_time) * 1000  # Calculate the time taken in milliseconds
-            return path, time_taken
-
-        for neighbor in G.neighbors(current_node):
-            weight = G.edges[current_node, neighbor, 0]['length']
-            distance = current_distance + weight
-
-            if distance < distances[neighbor]:
-                distances[neighbor] = distance
-                came_from[neighbor] = current_node
-                heapq.heappush(queue, (distance, neighbor))
-
-    end_time = time.time()  # End the timer in case no path is found
-    time_taken = (end_time - start_time) * 1000  # Calculate the time taken in milliseconds
-    return [], time_taken
 
 @app.route('/')
 def index():
